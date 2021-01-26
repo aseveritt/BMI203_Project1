@@ -21,3 +21,29 @@ python -m pytest test/*
 ```
 from the root directory of this project.
 
+
+################
+### Amanda additions:
+
+- All functions/classes are contained within the single script align/algs.py
+- An alignment can be run using the format:
+
+import align as algs
+sw = algs.SmithWaterman(gap_open=-4, gap_extension = -1, substitutionMatrix = "BLOSUM62")
+b = sw.align(algs.FastaRecord("sequences/prot-0004.fa"), algs.FastaRecord("sequences/prot-0022.fa"), print_flag=True)
+print(b.raw_score())
+print(b.number_gaps())
+nw = algs.NeedlemanWunsch(gap_open=-4, gap_extension = -0.5, substitutionMatrix = "BLOSUM50")
+nw.align(algs.FastaRecord("sequences/prot-0004.fa"), algs.FastaRecord("sequences/prot-0022.fa"), print_flag=True)
+
+
+- Script documentation is done through docstrings rendered with Sphinx:
+open aseveritt/BMI203_Project1/docs/build/html/index.html
+
+- Unit testing is all self contained within the single script as well that calls sequences already in sequences/ (directory not uploaded here)
+
+- Plotting and images located in jupyter notebook:
+open aseveritt/BMI203_Project1/Amanda_Everitt_BMI203_HW1.ipynb
+
+
+

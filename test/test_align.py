@@ -1,8 +1,5 @@
 import pytest
 from align import algs
-#import pandas as pd
-
-#python -m pytest test/* 
 
 @pytest.fixture
 def some_relevant_data():
