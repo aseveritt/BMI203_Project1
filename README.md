@@ -20,3 +20,4 @@ Testing is as simple as running
 python -m pytest test/*
 ```
 from the root directory of this project.
+

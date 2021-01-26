@@ -1,0 +1,416 @@
+
+<!DOCTYPE html>
+
+<html>
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>BMI203:Algorithms Project 1’s documentation &#8212; BMI203:Algorithms Project 1  documentation</title>
+    <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+    <link rel="stylesheet" href="_static/alabaster.css" type="text/css" />
+    <script id="documentation_options" data-url_root="./" src="_static/documentation_options.js"></script>
+    <script src="_static/jquery.js"></script>
+    <script src="_static/underscore.js"></script>
+    <script src="_static/doctools.js"></script>
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" />
+   
+  <link rel="stylesheet" href="_static/custom.css" type="text/css" />
+  
+  
+  <meta name="viewport" content="width=device-width, initial-scale=0.9, maximum-scale=0.9" />
+
+  </head><body>
+  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          
+
+          <div class="body" role="main">
+            
+  <div class="section" id="bmi203-algorithms-project-1-s-documentation">
+<h1>BMI203:Algorithms Project 1’s documentation<a class="headerlink" href="#bmi203-algorithms-project-1-s-documentation" title="Permalink to this headline">¶</a></h1>
+<p>sup guys</p>
+<hr class="docutils" />
+<span class="target" id="module-Project1.align.algs"></span><dl class="py class">
+<dt id="Project1.align.algs.FastaRecord">
+<em class="property">class </em><code class="sig-prename descclassname">Project1.align.algs.</code><code class="sig-name descname">FastaRecord</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">sequencefile</span></em><span class="sig-paren">)</span><a class="headerlink" href="#Project1.align.algs.FastaRecord" title="Permalink to this definition">¶</a></dt>
+<dd><p>Stores name and sequence of single fasta record</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>file</strong> (<em>sequence</em>) – FASTA file located in sequence directory to be loaded</p>
+</dd>
+</dl>
+<dl class="py attribute">
+<dt id="Project1.align.algs.FastaRecord.seq">
+<code class="sig-name descname">seq</code><a class="headerlink" href="#Project1.align.algs.FastaRecord.seq" title="Permalink to this definition">¶</a></dt>
+<dd><p>capitalized protein sequence which only contans valid characters</p>
+<dl class="field-list simple">
+<dt class="field-odd">Type</dt>
+<dd class="field-odd"><p>str</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py attribute">
+<dt id="Project1.align.algs.FastaRecord.name">
+<code class="sig-name descname">name</code><a class="headerlink" href="#Project1.align.algs.FastaRecord.name" title="Permalink to this definition">¶</a></dt>
+<dd><p>read or protein name</p>
+<dl class="field-list simple">
+<dt class="field-odd">Type</dt>
+<dd class="field-odd"><p>str</p>
+</dd>
+</dl>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="py class">
+<dt id="Project1.align.algs.NeedlemanWunsch">
+<em class="property">class </em><code class="sig-prename descclassname">Project1.align.algs.</code><code class="sig-name descname">NeedlemanWunsch</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">gap_open</span></em>, <em class="sig-param"><span class="n">gap_extension</span></em>, <em class="sig-param"><span class="n">substitutionMatrix</span></em>, <em class="sig-param"><span class="n">method</span><span class="o">=</span><span class="default_value">'NW'</span></em><span class="sig-paren">)</span><a class="headerlink" href="#Project1.align.algs.NeedlemanWunsch" title="Permalink to this definition">¶</a></dt>
+<dd><p>Computes Needleman-Wunsch measure.</p>
+<p>The Needleman-Wunsch algorithm with affine gap pentalty performs global sequence alignment between two strings.
+This will align the entire sequence length.</p>
+<dl class="py attribute">
+<dt id="Project1.align.algs.NeedlemanWunsch.gap_open">
+<code class="sig-name descname">gap_open</code><a class="headerlink" href="#Project1.align.algs.NeedlemanWunsch.gap_open" title="Permalink to this definition">¶</a></dt>
+<dd><p>gap opening cost. Suggested values fall between -1 and -20</p>
+<dl class="field-list simple">
+<dt class="field-odd">Type</dt>
+<dd class="field-odd"><p>float</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py attribute">
+<dt id="Project1.align.algs.NeedlemanWunsch.gap_extension">
+<code class="sig-name descname">gap_extension</code><a class="headerlink" href="#Project1.align.algs.NeedlemanWunsch.gap_extension" title="Permalink to this definition">¶</a></dt>
+<dd><p>gap extension cost. Suggested values fall between -1 and -5</p>
+<dl class="field-list simple">
+<dt class="field-odd">Type</dt>
+<dd class="field-odd"><p>float</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py attribute">
+<dt id="Project1.align.algs.NeedlemanWunsch.substitutionMatrix">
+<code class="sig-name descname">substitutionMatrix</code><a class="headerlink" href="#Project1.align.algs.NeedlemanWunsch.substitutionMatrix" title="Permalink to this definition">¶</a></dt>
+<dd><p>choice of four substiution matrices “BLOSUM62” (default), “BLOSUM50” ,”PAM250”, “PAM100”</p>
+<dl class="field-list simple">
+<dt class="field-odd">Type</dt>
+<dd class="field-odd"><p>str</p>
+</dd>
+</dl>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="py class">
+<dt id="Project1.align.algs.PairwiseAligner">
+<em class="property">class </em><code class="sig-prename descclassname">Project1.align.algs.</code><code class="sig-name descname">PairwiseAligner</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">gap_open</span><span class="o">=</span><span class="default_value">1</span></em>, <em class="sig-param"><span class="n">gap_extension</span><span class="o">=</span><span class="default_value">1</span></em>, <em class="sig-param"><span class="n">substitutionMatrix</span><span class="o">=</span><span class="default_value">'BLOSUM62'</span></em><span class="sig-paren">)</span><a class="headerlink" href="#Project1.align.algs.PairwiseAligner" title="Permalink to this definition">¶</a></dt>
+<dd><dl>
+<dt>Performs a Pairwise Alignment with of two provided sequences.</dt><dd><p>Currently adapted for Smith-Waterman with affine gap penalties and Needleman Wunsch with affine gap penalties.</p>
+<p>Obtains helper functions:
+align()
+raw_score()
+number_matches():
+number_gaps():</p>
+</dd>
+</dl>
+<dl class="py attribute">
+<dt id="Project1.align.algs.PairwiseAligner.gap_open">
+<code class="sig-name descname">gap_open</code><a class="headerlink" href="#Project1.align.algs.PairwiseAligner.gap_open" title="Permalink to this definition">¶</a></dt>
+<dd><p>gap opening cost. Suggested values fall between -1 and -20</p>
+<dl class="field-list simple">
+<dt class="field-odd">Type</dt>
+<dd class="field-odd"><p>float</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py attribute">
+<dt id="Project1.align.algs.PairwiseAligner.gap_extension">
+<code class="sig-name descname">gap_extension</code><a class="headerlink" href="#Project1.align.algs.PairwiseAligner.gap_extension" title="Permalink to this definition">¶</a></dt>
+<dd><p>gap extension cost. Suggested values fall between -1 and -5</p>
+<dl class="field-list simple">
+<dt class="field-odd">Type</dt>
+<dd class="field-odd"><p>float</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py attribute">
+<dt id="Project1.align.algs.PairwiseAligner.substitutionMatrix">
+<code class="sig-name descname">substitutionMatrix</code><a class="headerlink" href="#Project1.align.algs.PairwiseAligner.substitutionMatrix" title="Permalink to this definition">¶</a></dt>
+<dd><p>choice of four substiution matrices “BLOSUM62” (default), “BLOSUM50” ,”PAM250”, “PAM100”</p>
+<dl class="field-list simple">
+<dt class="field-odd">Type</dt>
+<dd class="field-odd"><p>str</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt id="Project1.align.algs.PairwiseAligner.align">
+<code class="sig-name descname">align</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">seqA</span></em>, <em class="sig-param"><span class="n">seqB</span></em>, <em class="sig-param"><span class="n">print_flag</span><span class="o">=</span><span class="default_value">True</span></em><span class="sig-paren">)</span><a class="headerlink" href="#Project1.align.algs.PairwiseAligner.align" title="Permalink to this definition">¶</a></dt>
+<dd><p>Align two sequences together</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>self</strong> (<a class="reference internal" href="#Project1.align.algs.PairwiseAligner" title="Project1.align.algs.PairwiseAligner"><em>PairwiseAligner</em></a>) – with attributes gap_open, gap_ext, sub_mat, and method defined.</p></li>
+<li><p><strong>seqA</strong> (<a class="reference internal" href="#Project1.align.algs.FastaRecord" title="Project1.align.algs.FastaRecord"><em>FastaRecord</em></a>) – Fasta Record representing sequence of AA characters and name</p></li>
+<li><p><strong>seqB</strong> (<a class="reference internal" href="#Project1.align.algs.FastaRecord" title="Project1.align.algs.FastaRecord"><em>FastaRecord</em></a>) – Fasta Record representing sequence of AA characters and name</p></li>
+<li><p><strong>print_flag</strong> (<em>bool</em>) – default (True) will print alignment to screen</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>with new attributes num_matches, num_gaps, top_pos, and top_score added</p>
+</dd>
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p>self (<a class="reference internal" href="#Project1.align.algs.PairwiseAligner" title="Project1.align.algs.PairwiseAligner">PairwiseAligner</a>)</p>
+</dd>
+</dl>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="py class">
+<dt id="Project1.align.algs.SmithWaterman">
+<em class="property">class </em><code class="sig-prename descclassname">Project1.align.algs.</code><code class="sig-name descname">SmithWaterman</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">gap_open</span></em>, <em class="sig-param"><span class="n">gap_extension</span></em>, <em class="sig-param"><span class="n">substitutionMatrix</span></em>, <em class="sig-param"><span class="n">method</span><span class="o">=</span><span class="default_value">'SW'</span></em><span class="sig-paren">)</span><a class="headerlink" href="#Project1.align.algs.SmithWaterman" title="Permalink to this definition">¶</a></dt>
+<dd><p>Computes Smith-Waterman measure.</p>
+<p>The Smith-Waterman algorithm with affine gap pentalty performs local sequence alignment between two strings.
+This will not align the entire sequence length, but the site with highest similarity.</p>
+<blockquote>
+<div><dl class="simple">
+<dt>Attributes:</dt><dd><p>gap_open (float): gap opening cost. Suggested values fall between -1 and -20
+gap_extension (float): gap extension cost. Suggested values fall between -1 and -5
+substitutionMatrix (str): choice of four substiution matrices “BLOSUM62” (default), “BLOSUM50” ,”PAM250”, “PAM100”</p>
+</dd>
+</dl>
+</div></blockquote>
+</dd></dl>
+
+<dl class="py function">
+<dt id="Project1.align.algs.backtrace">
+<code class="sig-prename descclassname">Project1.align.algs.</code><code class="sig-name descname">backtrace</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">seqA</span></em>, <em class="sig-param"><span class="n">seqB</span></em>, <em class="sig-param"><span class="n">val</span></em>, <em class="sig-param"><span class="n">start_pos</span></em><span class="sig-paren">)</span><a class="headerlink" href="#Project1.align.algs.backtrace" title="Permalink to this definition">¶</a></dt>
+<dd><p>Traceback through alignment matrix to find structure of top pairwise of provided sequences.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>seqA</strong> (<em>str</em>) – sequence of AA characters used to build “val” matrix in distance_matrix function</p></li>
+<li><p><strong>seqB</strong> (<em>str</em>) – sequence of AA characters used to build “val” matrix in distance_matrix function</p></li>
+<li><p><strong>val</strong> (<em>matrix</em>) – traceback matrix filled with either “diag”,”up”,”left”,”end” passed from  distance_matrix function</p></li>
+<li><p><strong>start_pos</strong> (<em>str</em>) – string representing coordinates to begin traceback from. eg. (5,6)
+This should be (len(seqB), len(seqA)) in global</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>string representing the optimal alignment of the provided sequences and traceback matrix. eg. (‘AAT-‘,’AATC’)</p>
+</dd>
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p>aligned_sequences (str)</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt id="Project1.align.algs.checkSeq">
+<code class="sig-prename descclassname">Project1.align.algs.</code><code class="sig-name descname">checkSeq</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">seq</span></em><span class="sig-paren">)</span><a class="headerlink" href="#Project1.align.algs.checkSeq" title="Permalink to this definition">¶</a></dt>
+<dd><p>Helper function thats flexible to check protein sequences are acceptible.
+Currently checks if sequence contains only alphabetical letters,
+formats into upper case only,
+and checks if only protein AA bases are given. (with x ans z additonally added)</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>seq</strong> (<em>str</em>) – protein sequence</p>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>uppercase of seqeunce provided or error</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt id="Project1.align.algs.distance_matrix">
+<code class="sig-prename descclassname">Project1.align.algs.</code><code class="sig-name descname">distance_matrix</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">self</span></em>, <em class="sig-param"><span class="n">method</span><span class="o">=</span><span class="default_value">'real'</span></em><span class="sig-paren">)</span><a class="headerlink" href="#Project1.align.algs.distance_matrix" title="Permalink to this definition">¶</a></dt>
+<dd><p>Builld all scoring and traceback matrices needed for performing a pairwise alignment.</p>
+<p>Four matrices are initialized of size len(seqB) + 1 * len(seqA) + 1.
+For all combination of sequence AAs, the value of a possible  match/mismatch, gap in seqA, or gap in seqB is obtained.
+In NW, the max value of these three possible options is saved in the total M matrix.
+In SW, the max value of these three possible options and zero  (as to not go negtive) is saved in the total M matrix.
+Depending on which matrix the top score originates from, the ‘val’ matrix is filled to determine what direction a user will go in the backtrace.</p>
+<p>As the M matrix is filled, the value and location of the cell with the highest value is stored.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>self</strong> (<a class="reference internal" href="#Project1.align.algs.PairwiseAligner" title="Project1.align.algs.PairwiseAligner"><em>PairwiseAligner</em></a>) – requires variables gap_open, gap_ext, seqA, seqB, and method be set.</p></li>
+<li><p><strong>method</strong> (<em>str</em>) – either “real” (default) or “testing” depending on if substitution matrix is being used.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>traceback matrix containing cells of either (“diag”, “up”,”left”,”end”) as instructions for backtrace
+M (matrix): Matrix representing the maxiumum cell obtained by either a (gap in either orientation X[i,j] or Y[i,j] or a match/mismatch score at i,j
+max_val (int): the maximum value observed in the M matrix – this is the raw alignment score in most situations.
+max_pos (str): row and column in M matrix where the maximum value is observed. takes the form (5,6)</p>
+</dd>
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p>val (matrix)</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt id="Project1.align.algs.generate_DFcmd_for_pytest">
+<code class="sig-prename descclassname">Project1.align.algs.</code><code class="sig-name descname">generate_DFcmd_for_pytest</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">df</span></em>, <em class="sig-param"><span class="n">pandas_as</span><span class="o">=</span><span class="default_value">'pd'</span></em><span class="sig-paren">)</span><a class="headerlink" href="#Project1.align.algs.generate_DFcmd_for_pytest" title="Permalink to this definition">¶</a></dt>
+<dd><p>Usage:
+a = PairwiseAligner(method=”SW”, gap_cost=5, substitutionMatrix = “BLOSUM62”)</p>
+<blockquote>
+<div><p>df = a.sub_mat
+print(gencmd(df))</p>
+<p>Takes an input df and outputs the command neccesssary to recreate it so I can use it for unit testing.</p>
+</div></blockquote>
+</dd></dl>
+
+<dl class="py function">
+<dt id="Project1.align.algs.load_substitution_matrix">
+<code class="sig-prename descclassname">Project1.align.algs.</code><code class="sig-name descname">load_substitution_matrix</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">subchoice</span></em><span class="sig-paren">)</span><a class="headerlink" href="#Project1.align.algs.load_substitution_matrix" title="Permalink to this definition">¶</a></dt>
+<dd><p>Loads in substitution matrix of choice.</p>
+<p>From the four possible options that are located in the scoring matrices directory,
+read them in as a matrix. I choose to do this way so its more robust towards errors in syntax.
+Then convert to a pandas dataframe to make indexing easier.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>subchoice</strong> (<em>str</em>) – passed from PairwiseAligner class. must be either: PAM250, PAM100, BLOSUM50, BLOSUM62</p>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>dataframe where rows and column are AA index</p>
+</dd>
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p>scoring matrix (df)</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt id="Project1.align.algs.print_like_blast">
+<code class="sig-prename descclassname">Project1.align.algs.</code><code class="sig-name descname">print_like_blast</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">aligned_seq1</span></em>, <em class="sig-param"><span class="n">aligned_seq2</span></em>, <em class="sig-param"><span class="n">print_flag</span></em><span class="sig-paren">)</span><a class="headerlink" href="#Project1.align.algs.print_like_blast" title="Permalink to this definition">¶</a></dt>
+<dd><p>Create an output format similar to blast.
+Print percent identities as well as percent gaps.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>aligned_seq1</strong> (<em>str</em>) – string representing the aligned segments with gaps where neccessary. passed from backtrace method.</p></li>
+<li><p><strong>aligned_seq2</strong> (<em>str</em>) – string representing the aligned segments with gaps where neccessary. passed from backtrace method.</p></li>
+<li><p><strong>print_flag</strong> (<em>bool</em>) – whether to print output to screen (True) or just return the number of identities and gaps (False)</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>raw number of positive identities
+gaps (int): number of gaps in aligned sequences</p>
+</dd>
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p>idents (int)</p>
+</dd>
+</dl>
+<p>CREDIT: <a class="reference external" href="https://gist.github.com/radaniba/11019717">https://gist.github.com/radaniba/11019717</a></p>
+</dd></dl>
+
+<dl class="py function">
+<dt id="Project1.align.algs.read_fasta">
+<code class="sig-prename descclassname">Project1.align.algs.</code><code class="sig-name descname">read_fasta</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">sequencefile</span></em><span class="sig-paren">)</span><a class="headerlink" href="#Project1.align.algs.read_fasta" title="Permalink to this definition">¶</a></dt>
+<dd><p>Reads in a single fasta sequnce from a file which must be in the sequences directory.
+Not adapted for other directories or having multiple sequences in one file.
+Not adapted for .fastq</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>sequencefile</strong> (<em>str</em>) – fasta file to read in.</p>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>read name
+sequence (str) : upper case, AA acid sequence</p>
+</dd>
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p>name (str)</p>
+</dd>
+</dl>
+</dd></dl>
+
+<div class="toctree-wrapper compound">
+</div>
+<div class="section" id="indices-and-tables">
+<h2>Indices and tables<a class="headerlink" href="#indices-and-tables" title="Permalink to this headline">¶</a></h2>
+<ul class="simple">
+<li><p><a class="reference internal" href="genindex.html"><span class="std std-ref">Index</span></a></p></li>
+<li><p><a class="reference internal" href="py-modindex.html"><span class="std std-ref">Module Index</span></a></p></li>
+<li><p><a class="reference internal" href="search.html"><span class="std std-ref">Search Page</span></a></p></li>
+</ul>
+</div>
+</div>
+
+
+          </div>
+          
+        </div>
+      </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper">
+<h1 class="logo"><a href="#">BMI203:Algorithms Project 1</a></h1>
+
+
+
+
+
+
+
+
+<h3>Navigation</h3>
+
+<div class="relations">
+<h3>Related Topics</h3>
+<ul>
+  <li><a href="#">Documentation overview</a><ul>
+  </ul></li>
+</ul>
+</div>
+<div id="searchbox" style="display: none" role="search">
+  <h3 id="searchlabel">Quick search</h3>
+    <div class="searchformwrapper">
+    <form class="search" action="search.html" method="get">
+      <input type="text" name="q" aria-labelledby="searchlabel" />
+      <input type="submit" value="Go" />
+    </form>
+    </div>
+</div>
+<script>$('#searchbox').show(0);</script>
+
+
+
+
+
+
+
+
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="footer">
+      &copy;2021, Amanda Everitt.
+      
+      |
+      Powered by <a href="http://sphinx-doc.org/">Sphinx 3.4.3</a>
+      &amp; <a href="https://github.com/bitprophet/alabaster">Alabaster 0.7.12</a>
+      
+      |
+      <a href="_sources/index.rst.txt"
+          rel="nofollow">Page source</a>
+    </div>
+
+    
+
+    
+  </body>
+</html>
