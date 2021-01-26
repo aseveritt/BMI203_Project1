@@ -81,7 +81,7 @@ def generate_DFcmd_for_pytest(df, pandas_as='pd'):
 
 	Takes an input df and outputs the command neccesssary to recreate it so I can use it for unit testing. 
     """
-    
+
     #Credit here : https://stackoverflow.com/questions/24005466/given-a-pandas-dataframe-is-there-an-easy-way-to-print-out-a-command-to-generat
     from types import MethodType
     from pandas import DataFrame, MultiIndex
@@ -195,9 +195,9 @@ def _init_v(i, j):
 	if j == 0 and i == 0:  
 		return "end"
 	elif i == 0 and j > 0:
-		return "up"
-	elif j == 0 and i > 0:
 		return "left"
+	elif j == 0 and i > 0:
+		return "up"
 	else:
 		return "tbd"
 
@@ -256,7 +256,7 @@ def _init_x(i, j, self):
 	if i == 0 and j == 0:
 		return self.gap_open
 	elif j == 0 and i > 0:
-		if self.flag == "NW":  return (self.gap_open + (self.gap_ext * j))
+		if self.flag == "NW":  return (self.gap_open + (self.gap_ext * i))
 		if self.flag == "SW": return -float("inf")
 	else:
 		return -float("inf")
@@ -313,21 +313,22 @@ def distance_matrix(self, method="real"):
     gap_ext = self.gap_ext
 
     MIN=-float("inf")
-    dim_i = len(self.seqA) + 1
-    dim_j = len(self.seqB) + 1
+    dim_i = len(self.seqB) + 1
+    dim_j = len(self.seqA) + 1
 
-    X = [[_init_y(i, j, self) for i in range(0, dim_i)] for j in range(0, dim_j)]
-    Y = [[_init_x(i, j, self) for i in range(0, dim_i)] for j in range(0, dim_j)]
-    M = [[_init_m(i, j, self) for i in range(0, dim_i)] for j in range(0, dim_j)]
-    val = [[_init_v(i, j) for i in range(0, dim_i)] for j in range(0, dim_j)]
+    X = [[_init_x(i, j, self) for j in range(0, dim_j)] for i in range(0, dim_i)]
+    Y = [[_init_y(i, j, self) for j in range(0, dim_j)] for i in range(0, dim_i)]
+    M = [[_init_m(i, j, self) for j in range(0, dim_j)] for i in range(0, dim_i)]
+    val = [[_init_v(i, j) for j in range(0, dim_j)] for i in range(0, dim_i)]
 
+    if method == "testing_init" : return [X, Y, M, val]
     
     max_val = 0
     max_pos = None
     #print(M); print(X); print(Y); print(val)
 
-    for i in range(1, dim_j):
-        for j in range(1, dim_i):
+    for i in range(1, dim_i):
+        for j in range(1, dim_j):
             tmp = _match(self.sub_mat, self.seqA[j - 1], self.seqB[i - 1], method) + M[i-1][j-1]
             Y[i][j] = max(
             			  (M[i][j-1] + gap_open),
@@ -358,6 +359,8 @@ def distance_matrix(self, method="real"):
             else:
             	print("ugh bro howd this happen"); exit()
     #print(M); print(X); print(Y); print(val)
+
+    if method == "testing" : return [M]
 
     return [val, M, max_val, max_pos]
 
@@ -559,6 +562,10 @@ if __name__ == "__main__":
 	print(b.raw_score())
 	print(b.number_matches())
 	print(b.number_gaps())
+
+	nw = NeedlemanWunsch(gap_open=-3, gap_extension = -1, substitutionMatrix = "BLOSUM62")
+	b = sw.align(FastaRecord("sequences/test5.fa"), FastaRecord("sequences/test6.fa"), print_flag=False)
+	print(b.top_pos)
 
 
 
