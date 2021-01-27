@@ -52,27 +52,18 @@ def test_scoring_matrix_io():
 	correct_v = [['end', 'left', 'left', 'left', 'left', 'left'], ['up', 'tbd', 'tbd', 'tbd', 'tbd', 'tbd'], ['up', 'tbd', 'tbd', 'tbd', 'tbd', 'tbd'], ['up', 'tbd', 'tbd', 'tbd', 'tbd', 'tbd']]
 
 	class AmandaTmp:
-		def __init__(self):
-			self.gap_open = -3
-			self.gap_ext = -1
-			self.seqA = "ACACT" 
-			self.seqB = "AAT"
-			self.flag = "NW"
-			self.sub_mat = "itdoesntmatter"
+		def __init__(self, sequence):
+			self.name = "adlkf"
+			self.seq = sequence
+	nw = algs.NeedlemanWunsch(gap_open=-3, gap_extension = -1, substitutionMatrix = "BLOSUM62")
+	a= nw.align(AmandaTmp("ACACT"), AmandaTmp("AAT"), print_flag=False)
+	b = a.initialize_matrices()
 
-	[X, Y, M, val] = algs.distance_matrix(AmandaTmp(), method="testing_init")
-	assert correct_X == X, "Failing to initialize X matrix properly"
-	assert correct_Y == Y, "Failing to initialize Y matrix properly"
-	assert correct_M == M, "Failing to initialize M matrix properly"
-	assert correct_v == val, "Failing to initialize traceback matrix properly"
-
-	#correct_X = [[-3, -inf, -inf, -inf, -inf, -inf], [-4, -inf, -inf, -inf, -inf, -inf], [-5, -2, -5, -6, -7, -8], [-6, -3, -3, -4, -7, -8]]
-	#correct_Y = [[-3, -4, -5, -6, -7, -8], [-inf, -inf, -2, -3, -4, -5], [-inf, -inf, -5, -3, -4, -5], [-inf, -inf, -6, -6, -4, -5]]
-
-	#[[[0, -inf, -inf, -inf, -inf, -inf], [-inf, 1, -2, -3, -4, -5], [-inf, -2, 0, -1, -4, -5], [-inf, -3, -3, -1, -2, -3]]]
-	#M = algs.distance_matrix(AmandaTmp(), method="testing")
-	#print(M)
-	#assert False
+	#[X, Y, M, val] = algs.distance_matrix(AmandaTmp(), method="testing_init")
+	assert correct_X == b.X, "Failing to initialize X matrix properly"
+	assert correct_Y == b.Y, "Failing to initialize Y matrix properly"
+	assert correct_M == b.M, "Failing to initialize M matrix properly"
+	assert correct_v == b.TB, "Failing to initialize traceback matrix properly"
 
 
 
@@ -93,21 +84,34 @@ def test_identical():
 	
 
 def test_alignment_score():
-	nw = algs.NeedlemanWunsch(gap_open=-3, gap_extension = -1, substitutionMatrix = "BLOSUM50")
-	b = nw.align(algs.FastaRecord("sequences/test1.fa"), algs.FastaRecord("sequences/test2.fa"), print_flag=False)
-	assert b.num_gaps == 1, "Not finding gaps correctly"
+	class AmandaTmp:
+		def __init__(self, sequence):
+			self.name = "adlkf"
+			self.seq = sequence
 
-	sw = algs.SmithWaterman(gap_open=-3, gap_extension = -1, substitutionMatrix = "BLOSUM50")
-	b = sw.align(algs.FastaRecord("sequences/test1.fa"), algs.FastaRecord("sequences/test2.fa"), print_flag=False)
-	assert b.num_gaps == 1, "Not finding gaps correctly"
-
+	nw = algs.NeedlemanWunsch(gap_open=-3, gap_extension = -1, substitutionMatrix = "BLOSUM62")
 	sw = algs.SmithWaterman(gap_open=-3, gap_extension = -1, substitutionMatrix = "BLOSUM62")
-	b = sw.align(algs.FastaRecord("sequences/test5.fa"), algs.FastaRecord("sequences/test6.fa"), print_flag=False)
-	assert b.top_score == 597, "Your scoring is messed up"
-	assert b.top_pos == (112, 131), "Your position is messed up"
+	b = nw.align(AmandaTmp("YYYWWW"), AmandaTmp("YYYAAA"), print_flag=False)
+	assert b.num_matches == 3, "Not finding matches correctly -- NW"
+	b = sw.align(AmandaTmp("YYYWWW"), AmandaTmp("YYYAAA"), print_flag=False)
+	assert b.num_matches == 3, "Not finding matches correctly -- SW"
 
+	b = nw.align(AmandaTmp("YYYWWWAAA"), AmandaTmp("YYYAAA"), print_flag=False)
+	assert b.num_gaps == 3, "Not finding gaps correctly -- NW"
+	b = sw.align(AmandaTmp("YYYWWWAAA"), AmandaTmp("YYYAAA"), print_flag=False)
+	assert b.num_gaps == 3, "Not finding gaps correctly --SW"
 
+	nw = algs.NeedlemanWunsch(gap_open=-3, gap_extension = -1, substitutionMatrix = "BLOSUM50")
+	sw = algs.SmithWaterman(gap_open=-3, gap_extension = -1, substitutionMatrix = "BLOSUM50")
+	#b = nw.align(AmandaTmp("CALM"), AmandaTmp("ACALMA"), print_flag=True)
+	#print(b.top_score)
 
+	#assert b.top_score == 22, "Not generating scores correctly -- NW"
+	b = sw.align(AmandaTmp("CALM"), AmandaTmp("ACALMA"), print_flag=False)
+	assert b.top_score == 30, "Not generating scores correctly -- NW"
 
-
+	b = nw.align(AmandaTmp("ACACT"), AmandaTmp("AAT"), print_flag=False)
+	assert b.top_score == 7, "Not generating scores correctly -- NW"
+	b = sw.align(AmandaTmp("ACACT"), AmandaTmp("AAT"), print_flag=False)
+	assert b.top_score == 9, "Not generating scores correctly -- NW"
 
