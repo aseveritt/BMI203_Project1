@@ -17,9 +17,9 @@ def test_fasta_io():
 
 
 	#what read_fasta is supposed to catch
-	assert algs.read_fasta("sequences/prot-0047.fa")  == ('>d2int__ 1.22.1.2.2', 'HKCDITLQEIIKTLNSLTEQKTLCTELTVTDIFAASKNTTEKETFCRAATVLRQFYSHHEKDTRCLGATAQQFHRHKQLIRFLKRLDRNLWGLAGLNSCPVKEANQSTLENFLERLKTIMREKYSKCSS'), "Failing base case"
+	assert algs.read_fasta("test_sequences/prot-0047.fa")  == ('>d2int__ 1.22.1.2.2', 'HKCDITLQEIIKTLNSLTEQKTLCTELTVTDIFAASKNTTEKETFCRAATVLRQFYSHHEKDTRCLGATAQQFHRHKQLIRFLKRLDRNLWGLAGLNSCPVKEANQSTLENFLERLKTIMREKYSKCSS'), "Failing base case"
 	with pytest.raises(FileNotFoundError):
-		algs.read_fasta("sequences/imnothere.fa")
+		algs.read_fasta("test_sequences/imnothere.fa")
 
 def test_sub_matrix_io():
 	correct_df = pd.DataFrame([['4', '-1', '-2', '-2', '0', '-1', '-1', '0', '-2', '-1', '-1', '-1', '-1', '-2', '-1', '1', '0', '-3', '-2', '0', '-2', '-1', '0', '-4'], 
