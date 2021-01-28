@@ -23,9 +23,10 @@ class FastaRecord(object):
 
 def checkSeq(seq):
 	'''Helper function thats flexible to check protein sequences are acceptible. 
-	Currently checks if sequence contains only alphabetical letters, 
-	formats into upper case only, 
-	and checks if only protein AA bases are given. (with x ans z additonally added)
+	
+	| Currently checks if sequence contains only alphabetical letters, 
+	| formats into upper case only, 
+	| and checks if only protein AA bases are given. (with x ans z additonally added)
 
 	Parameters: 
 		seq (str) : protein sequence
@@ -46,14 +47,16 @@ def checkSeq(seq):
 
 def read_fasta(sequencefile):
 	'''Reads in a single fasta sequnce from a file which must be in the sequences directory. 
-	Not adapted for other directories or having multiple sequences in one file. 
-	Not adapted for .fastq
+	
+	| Not adapted for other directories or having multiple sequences in one file. 
+	| Not adapted for .fastq
 
 	Parameters: 
 		sequencefile (str) : fasta file to read in. 
-	Returns:
-		name (str): read name
-		sequence (str) : upper case, AA acid sequence
+	
+	:returns:
+		- name (str): read name
+		- sequence (str) : upper case, AA acid sequence
     '''
 	with open(sequencefile) as fp: 
 		name, seq = None, []
@@ -72,6 +75,7 @@ def read_fasta(sequencefile):
 
 
 #Helpers for unit testing
+
 def generate_DFcmd_for_pytest(df, pandas_as='pd'):
     """
     Usage: 
@@ -108,9 +112,9 @@ def generate_DFcmd_for_pytest(df, pandas_as='pd'):
 def load_substitution_matrix(subchoice):
 	'''Loads in substitution matrix of choice. 
 
-	From the four possible options that are located in the scoring matrices directory,
-	read them in as a matrix. I choose to do this way so its more robust towards errors in syntax. 
-	Then convert to a pandas dataframe to make indexing easier. 
+	| From the four possible options that are located in the scoring matrices directory,
+	| read them in as a matrix. I choose to do this way so its more robust towards errors in syntax. 
+	| Then convert to a pandas dataframe to make indexing easier. 
 
 	Parameters: 
 		subchoice (str): passed from PairwiseAligner class. must be either: PAM250, PAM100, BLOSUM50, BLOSUM62
@@ -141,12 +145,12 @@ def print_like_blast(aligned_seq1, aligned_seq2, print_flag):
 		aligned_seq2 (str): string representing the aligned segments with gaps where neccessary. passed from backtrace method. 
 		print_flag (bool): whether to print output to screen (True) or just return the number of identities and gaps (False)
 
-	Returns:
-		idents (int): raw number of positive identities
-		gaps (int): number of gaps in aligned sequences
-
-	CREDIT: https://gist.github.com/radaniba/11019717
+	:returns:
+		- idents (int): raw number of positive identities
+		- gaps (int): number of gaps in aligned sequences
 	'''
+	#CREDIT: https://gist.github.com/radaniba/11019717 
+
 
 	idents, gaps, mismatches = 0, 0, 0
 	alignment_string = []
@@ -186,13 +190,17 @@ def print_like_blast(aligned_seq1, aligned_seq2, print_flag):
 
 class PairwiseAligner:
 	"""Performs a Pairwise Alignment with of two provided sequences.
+	
 	Currently adapted for Smith-Waterman with affine gap penalties and Needleman Wunsch with affine gap penalties. 
 
-	Obtains helper functions:
-	align()
-	raw_score()
-	number_matches():
-	number_gaps():
+	| Obtains helper functions:
+	| initialize_matrices(): nothing, passes to child classes
+	| init_v(): initialize the pointer matrix. same between two classes. 
+	| match(): score of match/mismatch
+	| fill_matrices(): fill all 3 matrices in nested for loop. 
+	| backtrace(): trace through pointer matrix. 
+	| number_matches():
+	| number_gaps():
 
      Attributes:
         gap_open (float): gap opening cost. Suggested values fall between -1 and -20
@@ -206,16 +214,18 @@ class PairwiseAligner:
 		self.sub_mat = load_substitution_matrix(substitutionMatrix)
 
 	def initialize_matrices(self):
+		#just pass to child
 		pass
 
 	def init_v(self, i, j):
 		''' Initialize Pointer Matrix for traceback. 
-		v[0,0] set to "end"
-		top row set to "left"
-		leftmost column set to "up"
-		all others set to "tbd" which will be overwritten by distance matrix function. 
+		
+		| v[0,0] set to "end"
+		| top row set to "left"
+		| leftmost column set to "up"
+		| all others set to "tbd" which will be overwritten by distance matrix function. 
 
-		No difference between global and local. Internal function called by distance matrix. 
+		| No difference between global and local. Internal function called by distance matrix. 
 
 		Parameters: 
 			i, j (int,int): position in matrix to fill. 
@@ -228,11 +238,10 @@ class PairwiseAligner:
 	def match(self, charA, charB, method="real", match=1, mismatch=-1):
 		''' Match score between two AAs
 	
-		Using a substitution matrix (method="real"), return the score of pairing the two AA together. 
-		Using a priori values (method = "testing"), return either the match or mismatch score. 
+		| Using a substitution matrix (method="real"), return the score of pairing the two AA together. 
+		| Using a priori values (method = "testing"), return either the match or mismatch score. 
 
 		Parameters: 
-			sub_mat (df): substition matrix passed from load_substitution_matrix()
 			charA (str): AA character (must be uppercase and found in sub_mat)
 			charB (str): AA character (must be uppercase and found in sub_mat)
 			method (str): either "real" (default) or "testing" depending on use of substitution matrix
@@ -251,23 +260,24 @@ class PairwiseAligner:
 	def fill_matrices(self, method="real"):
 		''' Builld all scoring and traceback matrices needed for performing a pairwise alignment. 
 	
-		Four matrices are initialized of size len(seqB) + 1 * len(seqA) + 1. 
-		For all combination of sequence AAs, the value of a possible  match/mismatch, gap in seqA, or gap in seqB is obtained. 
-		In NW, the max value of these three possible options is saved in the total M matrix.
-		In SW, the max value of these three possible options and zero  (as to not go negtive) is saved in the total M matrix.    
-		Depending on which matrix the top score originates from, the 'val' matrix is filled to determine what direction a user will go in the backtrace. 
+		| Four matrices are initialized of size len(seqB) + 1 * len(seqA) + 1. 
+
+		| For all combination of sequence AAs, the value of a possible  match/mismatch, gap in seqA, or gap in seqB is obtained. 
+		| In NW, the max value of these three possible options is saved in the total M matrix.
+		| In SW, the max value of these three possible options and zero  (as to not go negtive) is saved in the total M matrix.    
+		| Depending on which matrix the top score originates from, the 'val' matrix is filled to determine what direction a user will go in the backtrace. 
 	
-		As the M matrix is filled, the value and location of the cell with the highest value is stored. 
+		| As the M matrix is filled, the value and location of the cell with the highest value is stored. 
 
 		Parameters: 
 			self (PairwiseAligner): requires variables gap_open, gap_ext, seqA, seqB, and method be set. 
 			method (str): either "real" (default) or "testing" depending on if substitution matrix is being used. 
 
-		Returns:
-			val (matrix): traceback matrix containing cells of either ("diag", "up","left","end") as instructions for backtrace
-			M (matrix): Matrix representing the maxiumum cell obtained by either a (gap in either orientation X[i,j] or Y[i,j] or a match/mismatch score at i,j
-			max_val (int): the maximum value observed in the M matrix -- this is the raw alignment score in most situations. 
-			max_pos (str): row and column in M matrix where the maximum value is observed. takes the form (5,6)
+		:returns:
+			- val (matrix): traceback matrix containing cells of either ("diag", "up","left","end") as instructions for backtrace
+			- M (matrix): Matrix representing the maxiumum cell obtained by either a (gap in either orientation X[i,j] or Y[i,j] or a match/mismatch score at i,j
+			- max_val (int): the maximum value observed in the M matrix -- this is the raw alignment score in most situations. 
+			- max_pos (str): row and column in M matrix where the maximum value is observed. takes the form (5,6)
 		'''
 
 		#I know this is technically not using code efficiently, but so much easier to read.
@@ -284,55 +294,42 @@ class PairwiseAligner:
 
 		for i in range(1, len(self.seqB) + 1):
 			for j in range(1, len(self.seqA) + 1):
-				#print(i,j)
-				#tmp is match/mismatch
-				tmp = self.match(self.seqA[j - 1], self.seqB[i - 1], method) + M[i-1][j-1]
-				#print(tmp)
-
+				tmp = self.match(self.seqA[j - 1], self.seqB[i - 1], method) + M[i-1][j-1] #tmp is match/mismatch
 				Y[i][j] = max(
-						  (M[i][j-1] + gap_open + gap_ext),
+						  (M[i][j-1] + gap_open), 
 			 			  (Y[i][j-1] + gap_ext))
 				X[i][j] = max(
-						  (M[i-1][j] + gap_open + gap_ext), 
+						  (M[i-1][j] + gap_open), 
 						  (X[i-1][j] + gap_ext)
 						  )
-				#print(Y[i][j])
-				#print(X[i][j])
+
 				if self.flag == "NW" : ugh = [tmp, X[i][j], Y[i][j]]
 				if self.flag == "SW" : ugh = [tmp, X[i][j], Y[i][j], 0]
-				#print(ugh)
 
-				M[i][j]  = max(ugh)
+				M[i][j]  = max(ugh)	
 				if M[i][j] > max_val:  				  #calculate it so that we know where to start traceback
 					max_val = M[i][j]
 					max_pos = (i,j)
 
-				maxmat = ugh.index(max(ugh))
+				maxmat = ugh.index(max(ugh))			#first occurence given if tie, so ties will go to diagnols.
 				if maxmat == 0:   val[i][j] = "diag"
 				elif maxmat == 1: val[i][j] = "up"
 				elif maxmat == 2: val[i][j] = "left"
-				elif maxmat == 3: val[i][j] = "end"
+				elif maxmat == 3: val[i][j] = "end"				#will never reach in NW
 				else: print("ugh bro howd this happen"); exit()
-		#print(M); print(X); print(Y); print(val)
 
 		if method == "testing" : return [M]
-
 		return [val, M, max_val, max_pos]
 
 	def backtrace(self, val):
 		''' Traceback through alignment matrix to find structure of top pairwise of provided sequences.
 
 		Parameters: 
-			seqA (str): sequence of AA characters used to build "val" matrix in distance_matrix function
-			seqB (str): sequence of AA characters used to build "val" matrix in distance_matrix function
 			val (matrix): traceback matrix filled with either "diag","up","left","end" passed from  distance_matrix function
-			start_pos (str): string representing coordinates to begin traceback from. eg. (5,6)
-				This should be (len(seqB), len(seqA)) in global
 
 		Returns:
 			aligned_sequences (str): string representing the optimal alignment of the provided sequences and traceback matrix. eg. ('AAT-','AATC')
 		'''
-
 
 		i,j = self.top_pos
 		sequ1 = ''
@@ -341,7 +338,6 @@ class PairwiseAligner:
 		while (i>0 or j>0):
 			currval = val[i][j]
 			if currval == "diag": #diag
-			#note, ugh.index(max(ugh)) will return the first occurence first if tie, so important to keep M[i,j] first in list
 				sequ1 += self.seqA[j-1]
 				sequ2 += self.seqB[i-1]
 				i -= 1; j -= 1
@@ -376,19 +372,14 @@ class PairwiseAligner:
 			print_flag (bool): default (True) will print alignment to screen
 
 		Returns:
-			self (PairwiseAligner): with new attributes num_matches, num_gaps, top_pos, and top_score added
+			self (PairwiseAligner): self with new attributes num_matches, num_gaps, top_pos, and top_score added
 		'''
 
 		self.seqA = seqA.seq
 		self.seqB = seqB.seq
 		self.initialize_matrices()
-		#print(self.M)
-		
 		traceback_mat, M_mat, score, position = self.fill_matrices()
 
-		#traceback_mat, M_mat, score, position = distance_matrix(self)
-		#print(M_mat)
-		#print(traceback_mat)
 		if self.flag == "SW": 
 			self.top_pos = position
 			self.top_score = score
@@ -396,10 +387,7 @@ class PairwiseAligner:
 		if self.flag == "NW": 
 			self.top_pos = (len(self.seqB), len(self.seqA))
 			self.top_score = M_mat[len(self.seqB)][len(self.seqA)]
-			print(M_mat)
 
-		print (self.top_pos)
-		print (self.top_score)
 		seq1_aligned, seq2_aligned = self.backtrace(traceback_mat)
 		match, gaps = print_like_blast(seq1_aligned, seq2_aligned, print_flag)
 		self.num_matches = match
@@ -419,14 +407,14 @@ class PairwiseAligner:
 class SmithWaterman(PairwiseAligner):
 	"""Computes Smith-Waterman measure.
 
-    The Smith-Waterman algorithm with affine gap pentalty performs local sequence alignment between two strings. 
-    This will not align the entire sequence length, but the site with highest similarity. 
+    | The Smith-Waterman algorithm with affine gap pentalty performs local sequence alignment between two strings. 
+    | This will not align the entire sequence length, but the site with highest similarity. 
 
-     Attributes:
+    Parameters:
         gap_open (float): gap opening cost. Suggested values fall between -1 and -20
         gap_extension (float): gap extension cost. Suggested values fall between -1 and -5
         substitutionMatrix (str): choice of four substiution matrices "BLOSUM62" (default), "BLOSUM50" ,"PAM250", "PAM100"
-    """
+	"""
 
 	def __init__(self, gap_open, gap_extension, substitutionMatrix, method="SW"):
 		self.flag = method
@@ -463,11 +451,11 @@ class NeedlemanWunsch(PairwiseAligner):
     The Needleman-Wunsch algorithm with affine gap pentalty performs global sequence alignment between two strings. 
     This will align the entire sequence length.  
 
-    Attributes:
+    Parameters:
         gap_open (float): gap opening cost. Suggested values fall between -1 and -20
         gap_extension (float): gap extension cost. Suggested values fall between -1 and -5
         substitutionMatrix (str): choice of four substiution matrices "BLOSUM62" (default), "BLOSUM50" ,"PAM250", "PAM100"
-    """
+	"""
 
 	def __init__(self, gap_open, gap_extension, substitutionMatrix, method="NW"):
 		self.flag = method
@@ -495,32 +483,6 @@ class NeedlemanWunsch(PairwiseAligner):
 		self.M = [[self.init_m(i, j) for j in range(0, dim_j)] for i in range(0, dim_i)]
 		self.TB = [[self.init_v(i, j) for j in range(0, dim_j)] for i in range(0, dim_i)]
 		return (self)
-
-
-
-
-##### -------------------------------------------------------------------------------  #####
-#troubleshooting code im scared to get rid of. 
-
-# [val, s] = distance_matrix("ACACT", "AAT", gap_open=-3, gap_ext=-1, sub_mat="doesntmatter", method="testing")
-# print(val)
-# print(s)
-# #print(M); print(X); print(Y)
-
-# a,b = backtrace("ACACT","AAT", val)
-# print_like_blast(a,b)
-# #print(a)
-
-# [val, s] = distance_matrix("ACACT", "ACACT", gap_open=-3, gap_ext=-1, sub_mat="doesntmatter", method="testing")
-# a,b = backtrace("ACACT","ACACT", val, sub_mat="doesntmatter", method="testing")
-# print_like_blast(a,b)
-
-
-# one = "SLEAAQKSNVTSSWAKASAAWGTAGPEFFMALFDAHDDVFAKFSGLFSGAAKGTVKNTPE"
-# two = "SLEAAQKSNVTSSWAKASAAWGTAGPEFFMALFDAHDDVFAKFSGLFSGAAKGTVKNTPE"
-# #[val, s] = distance_matrix(one, two, gap_open=-3, gap_ext=-1, sub_mat=load_substitution_matrix("BLOSUM62"))
-# #a,b = backtrace(one, two, val, sub_mat=load_substitution_matrix("BLOSUM62"))
-# print_like_blast(a,b)
 
 
 

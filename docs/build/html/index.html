@@ -73,53 +73,34 @@
 <dd><p>Computes Needleman-Wunsch measure.</p>
 <p>The Needleman-Wunsch algorithm with affine gap pentalty performs global sequence alignment between two strings.
 This will align the entire sequence length.</p>
-<dl class="py attribute">
-<dt id="Project1.align.algs.NeedlemanWunsch.gap_open">
-<code class="sig-name descname">gap_open</code><a class="headerlink" href="#Project1.align.algs.NeedlemanWunsch.gap_open" title="Permalink to this definition">¶</a></dt>
-<dd><p>gap opening cost. Suggested values fall between -1 and -20</p>
 <dl class="field-list simple">
-<dt class="field-odd">Type</dt>
-<dd class="field-odd"><p>float</p>
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>gap_open</strong> (<em>float</em>) – gap opening cost. Suggested values fall between -1 and -20</p></li>
+<li><p><strong>gap_extension</strong> (<em>float</em>) – gap extension cost. Suggested values fall between -1 and -5</p></li>
+<li><p><strong>substitutionMatrix</strong> (<em>str</em>) – choice of four substiution matrices “BLOSUM62” (default), “BLOSUM50” ,”PAM250”, “PAM100”</p></li>
+</ul>
 </dd>
 </dl>
-</dd></dl>
-
-<dl class="py attribute">
-<dt id="Project1.align.algs.NeedlemanWunsch.gap_extension">
-<code class="sig-name descname">gap_extension</code><a class="headerlink" href="#Project1.align.algs.NeedlemanWunsch.gap_extension" title="Permalink to this definition">¶</a></dt>
-<dd><p>gap extension cost. Suggested values fall between -1 and -5</p>
-<dl class="field-list simple">
-<dt class="field-odd">Type</dt>
-<dd class="field-odd"><p>float</p>
-</dd>
-</dl>
-</dd></dl>
-
-<dl class="py attribute">
-<dt id="Project1.align.algs.NeedlemanWunsch.substitutionMatrix">
-<code class="sig-name descname">substitutionMatrix</code><a class="headerlink" href="#Project1.align.algs.NeedlemanWunsch.substitutionMatrix" title="Permalink to this definition">¶</a></dt>
-<dd><p>choice of four substiution matrices “BLOSUM62” (default), “BLOSUM50” ,”PAM250”, “PAM100”</p>
-<dl class="field-list simple">
-<dt class="field-odd">Type</dt>
-<dd class="field-odd"><p>str</p>
-</dd>
-</dl>
-</dd></dl>
-
 </dd></dl>
 
 <dl class="py class">
 <dt id="Project1.align.algs.PairwiseAligner">
 <em class="property">class </em><code class="sig-prename descclassname">Project1.align.algs.</code><code class="sig-name descname">PairwiseAligner</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">gap_open</span><span class="o">=</span><span class="default_value">1</span></em>, <em class="sig-param"><span class="n">gap_extension</span><span class="o">=</span><span class="default_value">1</span></em>, <em class="sig-param"><span class="n">substitutionMatrix</span><span class="o">=</span><span class="default_value">'BLOSUM62'</span></em><span class="sig-paren">)</span><a class="headerlink" href="#Project1.align.algs.PairwiseAligner" title="Permalink to this definition">¶</a></dt>
-<dd><dl>
-<dt>Performs a Pairwise Alignment with of two provided sequences.</dt><dd><p>Currently adapted for Smith-Waterman with affine gap penalties and Needleman Wunsch with affine gap penalties.</p>
-<p>Obtains helper functions:
-align()
-raw_score()
-number_matches():
-number_gaps():</p>
-</dd>
-</dl>
+<dd><p>Performs a Pairwise Alignment with of two provided sequences.</p>
+<blockquote>
+<div><p>Currently adapted for Smith-Waterman with affine gap penalties and Needleman Wunsch with affine gap penalties.</p>
+<div class="line-block">
+<div class="line">Obtains helper functions:</div>
+<div class="line">initialize_matrices(): nothing, passes to child classes</div>
+<div class="line">init_v(): initialize the pointer matrix. same between two classes.</div>
+<div class="line">match(): score of match/mismatch</div>
+<div class="line">fill_matrices(): fill all 3 matrices in nested for loop.</div>
+<div class="line">backtrace(): trace through pointer matrix.</div>
+<div class="line">number_matches():</div>
+<div class="line">number_gaps():</div>
+</div>
+</div></blockquote>
 <dl class="py attribute">
 <dt id="Project1.align.algs.PairwiseAligner.gap_open">
 <code class="sig-name descname">gap_open</code><a class="headerlink" href="#Project1.align.algs.PairwiseAligner.gap_open" title="Permalink to this definition">¶</a></dt>
@@ -167,7 +148,7 @@ number_gaps():</p>
 </ul>
 </dd>
 <dt class="field-even">Returns</dt>
-<dd class="field-even"><p>with new attributes num_matches, num_gaps, top_pos, and top_score added</p>
+<dd class="field-even"><p>self with new attributes num_matches, num_gaps, top_pos, and top_score added</p>
 </dd>
 <dt class="field-odd">Return type</dt>
 <dd class="field-odd"><p>self (<a class="reference internal" href="#Project1.align.algs.PairwiseAligner" title="Project1.align.algs.PairwiseAligner">PairwiseAligner</a>)</p>
@@ -175,37 +156,13 @@ number_gaps():</p>
 </dl>
 </dd></dl>
 
-</dd></dl>
-
-<dl class="py class">
-<dt id="Project1.align.algs.SmithWaterman">
-<em class="property">class </em><code class="sig-prename descclassname">Project1.align.algs.</code><code class="sig-name descname">SmithWaterman</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">gap_open</span></em>, <em class="sig-param"><span class="n">gap_extension</span></em>, <em class="sig-param"><span class="n">substitutionMatrix</span></em>, <em class="sig-param"><span class="n">method</span><span class="o">=</span><span class="default_value">'SW'</span></em><span class="sig-paren">)</span><a class="headerlink" href="#Project1.align.algs.SmithWaterman" title="Permalink to this definition">¶</a></dt>
-<dd><p>Computes Smith-Waterman measure.</p>
-<p>The Smith-Waterman algorithm with affine gap pentalty performs local sequence alignment between two strings.
-This will not align the entire sequence length, but the site with highest similarity.</p>
-<blockquote>
-<div><dl class="simple">
-<dt>Attributes:</dt><dd><p>gap_open (float): gap opening cost. Suggested values fall between -1 and -20
-gap_extension (float): gap extension cost. Suggested values fall between -1 and -5
-substitutionMatrix (str): choice of four substiution matrices “BLOSUM62” (default), “BLOSUM50” ,”PAM250”, “PAM100”</p>
-</dd>
-</dl>
-</div></blockquote>
-</dd></dl>
-
-<dl class="py function">
-<dt id="Project1.align.algs.backtrace">
-<code class="sig-prename descclassname">Project1.align.algs.</code><code class="sig-name descname">backtrace</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">seqA</span></em>, <em class="sig-param"><span class="n">seqB</span></em>, <em class="sig-param"><span class="n">val</span></em>, <em class="sig-param"><span class="n">start_pos</span></em><span class="sig-paren">)</span><a class="headerlink" href="#Project1.align.algs.backtrace" title="Permalink to this definition">¶</a></dt>
+<dl class="py method">
+<dt id="Project1.align.algs.PairwiseAligner.backtrace">
+<code class="sig-name descname">backtrace</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">val</span></em><span class="sig-paren">)</span><a class="headerlink" href="#Project1.align.algs.PairwiseAligner.backtrace" title="Permalink to this definition">¶</a></dt>
 <dd><p>Traceback through alignment matrix to find structure of top pairwise of provided sequences.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
-<dd class="field-odd"><ul class="simple">
-<li><p><strong>seqA</strong> (<em>str</em>) – sequence of AA characters used to build “val” matrix in distance_matrix function</p></li>
-<li><p><strong>seqB</strong> (<em>str</em>) – sequence of AA characters used to build “val” matrix in distance_matrix function</p></li>
-<li><p><strong>val</strong> (<em>matrix</em>) – traceback matrix filled with either “diag”,”up”,”left”,”end” passed from  distance_matrix function</p></li>
-<li><p><strong>start_pos</strong> (<em>str</em>) – string representing coordinates to begin traceback from. eg. (5,6)
-This should be (len(seqB), len(seqA)) in global</p></li>
-</ul>
+<dd class="field-odd"><p><strong>val</strong> (<em>matrix</em>) – traceback matrix filled with either “diag”,”up”,”left”,”end” passed from  distance_matrix function</p>
 </dd>
 <dt class="field-even">Returns</dt>
 <dd class="field-even"><p>string representing the optimal alignment of the provided sequences and traceback matrix. eg. (‘AAT-‘,’AATC’)</p>
@@ -216,33 +173,22 @@ This should be (len(seqB), len(seqA)) in global</p></li>
 </dl>
 </dd></dl>
 
-<dl class="py function">
-<dt id="Project1.align.algs.checkSeq">
-<code class="sig-prename descclassname">Project1.align.algs.</code><code class="sig-name descname">checkSeq</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">seq</span></em><span class="sig-paren">)</span><a class="headerlink" href="#Project1.align.algs.checkSeq" title="Permalink to this definition">¶</a></dt>
-<dd><p>Helper function thats flexible to check protein sequences are acceptible.
-Currently checks if sequence contains only alphabetical letters,
-formats into upper case only,
-and checks if only protein AA bases are given. (with x ans z additonally added)</p>
-<dl class="field-list simple">
-<dt class="field-odd">Parameters</dt>
-<dd class="field-odd"><p><strong>seq</strong> (<em>str</em>) – protein sequence</p>
-</dd>
-<dt class="field-even">Returns</dt>
-<dd class="field-even"><p>uppercase of seqeunce provided or error</p>
-</dd>
-</dl>
-</dd></dl>
-
-<dl class="py function">
-<dt id="Project1.align.algs.distance_matrix">
-<code class="sig-prename descclassname">Project1.align.algs.</code><code class="sig-name descname">distance_matrix</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">self</span></em>, <em class="sig-param"><span class="n">method</span><span class="o">=</span><span class="default_value">'real'</span></em><span class="sig-paren">)</span><a class="headerlink" href="#Project1.align.algs.distance_matrix" title="Permalink to this definition">¶</a></dt>
+<dl class="py method">
+<dt id="Project1.align.algs.PairwiseAligner.fill_matrices">
+<code class="sig-name descname">fill_matrices</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">method</span><span class="o">=</span><span class="default_value">'real'</span></em><span class="sig-paren">)</span><a class="headerlink" href="#Project1.align.algs.PairwiseAligner.fill_matrices" title="Permalink to this definition">¶</a></dt>
 <dd><p>Builld all scoring and traceback matrices needed for performing a pairwise alignment.</p>
-<p>Four matrices are initialized of size len(seqB) + 1 * len(seqA) + 1.
-For all combination of sequence AAs, the value of a possible  match/mismatch, gap in seqA, or gap in seqB is obtained.
-In NW, the max value of these three possible options is saved in the total M matrix.
-In SW, the max value of these three possible options and zero  (as to not go negtive) is saved in the total M matrix.
-Depending on which matrix the top score originates from, the ‘val’ matrix is filled to determine what direction a user will go in the backtrace.</p>
-<p>As the M matrix is filled, the value and location of the cell with the highest value is stored.</p>
+<div class="line-block">
+<div class="line">Four matrices are initialized of size len(seqB) + 1 * len(seqA) + 1.</div>
+</div>
+<div class="line-block">
+<div class="line">For all combination of sequence AAs, the value of a possible  match/mismatch, gap in seqA, or gap in seqB is obtained.</div>
+<div class="line">In NW, the max value of these three possible options is saved in the total M matrix.</div>
+<div class="line">In SW, the max value of these three possible options and zero  (as to not go negtive) is saved in the total M matrix.</div>
+<div class="line">Depending on which matrix the top score originates from, the ‘val’ matrix is filled to determine what direction a user will go in the backtrace.</div>
+</div>
+<div class="line-block">
+<div class="line">As the M matrix is filled, the value and location of the cell with the highest value is stored.</div>
+</div>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
 <dd class="field-odd"><ul class="simple">
@@ -251,13 +197,100 @@ Depending on which matrix the top score originates from, the ‘val’ matrix is
 </ul>
 </dd>
 <dt class="field-even">Returns</dt>
-<dd class="field-even"><p>traceback matrix containing cells of either (“diag”, “up”,”left”,”end”) as instructions for backtrace
-M (matrix): Matrix representing the maxiumum cell obtained by either a (gap in either orientation X[i,j] or Y[i,j] or a match/mismatch score at i,j
-max_val (int): the maximum value observed in the M matrix – this is the raw alignment score in most situations.
-max_pos (str): row and column in M matrix where the maximum value is observed. takes the form (5,6)</p>
+<dd class="field-even"><p><ul class="simple">
+<li><p>val (matrix): traceback matrix containing cells of either (“diag”, “up”,”left”,”end”) as instructions for backtrace</p></li>
+<li><p>M (matrix): Matrix representing the maxiumum cell obtained by either a (gap in either orientation X[i,j] or Y[i,j] or a match/mismatch score at i,j</p></li>
+<li><p>max_val (int): the maximum value observed in the M matrix – this is the raw alignment score in most situations.</p></li>
+<li><p>max_pos (str): row and column in M matrix where the maximum value is observed. takes the form (5,6)</p></li>
+</ul>
+</p>
 </dd>
-<dt class="field-odd">Return type</dt>
-<dd class="field-odd"><p>val (matrix)</p>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt id="Project1.align.algs.PairwiseAligner.init_v">
+<code class="sig-name descname">init_v</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">i</span></em>, <em class="sig-param"><span class="n">j</span></em><span class="sig-paren">)</span><a class="headerlink" href="#Project1.align.algs.PairwiseAligner.init_v" title="Permalink to this definition">¶</a></dt>
+<dd><p>Initialize Pointer Matrix for traceback.</p>
+<div class="line-block">
+<div class="line">v[0,0] set to “end”</div>
+<div class="line">top row set to “left”</div>
+<div class="line">leftmost column set to “up”</div>
+<div class="line">all others set to “tbd” which will be overwritten by distance matrix function.</div>
+</div>
+<div class="line-block">
+<div class="line">No difference between global and local. Internal function called by distance matrix.</div>
+</div>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>i</strong> (<em>int</em><em>,</em><em>int</em>) – position in matrix to fill.</p></li>
+<li><p><strong>j</strong> (<em>int</em><em>,</em><em>int</em>) – position in matrix to fill.</p></li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt id="Project1.align.algs.PairwiseAligner.match">
+<code class="sig-name descname">match</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">charA</span></em>, <em class="sig-param"><span class="n">charB</span></em>, <em class="sig-param"><span class="n">method</span><span class="o">=</span><span class="default_value">'real'</span></em>, <em class="sig-param"><span class="n">match</span><span class="o">=</span><span class="default_value">1</span></em>, <em class="sig-param"><span class="n">mismatch</span><span class="o">=</span><span class="default_value">- 1</span></em><span class="sig-paren">)</span><a class="headerlink" href="#Project1.align.algs.PairwiseAligner.match" title="Permalink to this definition">¶</a></dt>
+<dd><p>Match score between two AAs</p>
+<div class="line-block">
+<div class="line">Using a substitution matrix (method=”real”), return the score of pairing the two AA together.</div>
+<div class="line">Using a priori values (method = “testing”), return either the match or mismatch score.</div>
+</div>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>charA</strong> (<em>str</em>) – AA character (must be uppercase and found in sub_mat)</p></li>
+<li><p><strong>charB</strong> (<em>str</em>) – AA character (must be uppercase and found in sub_mat)</p></li>
+<li><p><strong>method</strong> (<em>str</em>) – either “real” (default) or “testing” depending on use of substitution matrix</p></li>
+<li><p><strong>match</strong> (<em>int</em>) – default 1 used if method == “testing”</p></li>
+<li><p><strong>mismatch</strong> (<em>int</em>) – default -1 used if method == “testing”</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>(int)</p>
+</dd>
+</dl>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="py class">
+<dt id="Project1.align.algs.SmithWaterman">
+<em class="property">class </em><code class="sig-prename descclassname">Project1.align.algs.</code><code class="sig-name descname">SmithWaterman</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">gap_open</span></em>, <em class="sig-param"><span class="n">gap_extension</span></em>, <em class="sig-param"><span class="n">substitutionMatrix</span></em>, <em class="sig-param"><span class="n">method</span><span class="o">=</span><span class="default_value">'SW'</span></em><span class="sig-paren">)</span><a class="headerlink" href="#Project1.align.algs.SmithWaterman" title="Permalink to this definition">¶</a></dt>
+<dd><p>Computes Smith-Waterman measure.</p>
+<div class="line-block">
+<div class="line">The Smith-Waterman algorithm with affine gap pentalty performs local sequence alignment between two strings.</div>
+<div class="line">This will not align the entire sequence length, but the site with highest similarity.</div>
+</div>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>gap_open</strong> (<em>float</em>) – gap opening cost. Suggested values fall between -1 and -20</p></li>
+<li><p><strong>gap_extension</strong> (<em>float</em>) – gap extension cost. Suggested values fall between -1 and -5</p></li>
+<li><p><strong>substitutionMatrix</strong> (<em>str</em>) – choice of four substiution matrices “BLOSUM62” (default), “BLOSUM50” ,”PAM250”, “PAM100”</p></li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt id="Project1.align.algs.checkSeq">
+<code class="sig-prename descclassname">Project1.align.algs.</code><code class="sig-name descname">checkSeq</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">seq</span></em><span class="sig-paren">)</span><a class="headerlink" href="#Project1.align.algs.checkSeq" title="Permalink to this definition">¶</a></dt>
+<dd><p>Helper function thats flexible to check protein sequences are acceptible.</p>
+<div class="line-block">
+<div class="line">Currently checks if sequence contains only alphabetical letters,</div>
+<div class="line">formats into upper case only,</div>
+<div class="line">and checks if only protein AA bases are given. (with x ans z additonally added)</div>
+</div>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>seq</strong> (<em>str</em>) – protein sequence</p>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>uppercase of seqeunce provided or error</p>
 </dd>
 </dl>
 </dd></dl>
@@ -278,9 +311,11 @@ print(gencmd(df))</p>
 <dt id="Project1.align.algs.load_substitution_matrix">
 <code class="sig-prename descclassname">Project1.align.algs.</code><code class="sig-name descname">load_substitution_matrix</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">subchoice</span></em><span class="sig-paren">)</span><a class="headerlink" href="#Project1.align.algs.load_substitution_matrix" title="Permalink to this definition">¶</a></dt>
 <dd><p>Loads in substitution matrix of choice.</p>
-<p>From the four possible options that are located in the scoring matrices directory,
-read them in as a matrix. I choose to do this way so its more robust towards errors in syntax.
-Then convert to a pandas dataframe to make indexing easier.</p>
+<div class="line-block">
+<div class="line">From the four possible options that are located in the scoring matrices directory,</div>
+<div class="line">read them in as a matrix. I choose to do this way so its more robust towards errors in syntax.</div>
+<div class="line">Then convert to a pandas dataframe to make indexing easier.</div>
+</div>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
 <dd class="field-odd"><p><strong>subchoice</strong> (<em>str</em>) – passed from PairwiseAligner class. must be either: PAM250, PAM100, BLOSUM50, BLOSUM62</p>
@@ -308,32 +343,33 @@ Print percent identities as well as percent gaps.</p>
 </ul>
 </dd>
 <dt class="field-even">Returns</dt>
-<dd class="field-even"><p>raw number of positive identities
-gaps (int): number of gaps in aligned sequences</p>
-</dd>
-<dt class="field-odd">Return type</dt>
-<dd class="field-odd"><p>idents (int)</p>
+<dd class="field-even"><p><ul class="simple">
+<li><p>idents (int): raw number of positive identities</p></li>
+<li><p>gaps (int): number of gaps in aligned sequences</p></li>
+</ul>
+</p>
 </dd>
 </dl>
-<p>CREDIT: <a class="reference external" href="https://gist.github.com/radaniba/11019717">https://gist.github.com/radaniba/11019717</a></p>
 </dd></dl>
 
 <dl class="py function">
 <dt id="Project1.align.algs.read_fasta">
 <code class="sig-prename descclassname">Project1.align.algs.</code><code class="sig-name descname">read_fasta</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">sequencefile</span></em><span class="sig-paren">)</span><a class="headerlink" href="#Project1.align.algs.read_fasta" title="Permalink to this definition">¶</a></dt>
-<dd><p>Reads in a single fasta sequnce from a file which must be in the sequences directory.
-Not adapted for other directories or having multiple sequences in one file.
-Not adapted for .fastq</p>
+<dd><p>Reads in a single fasta sequnce from a file which must be in the sequences directory.</p>
+<div class="line-block">
+<div class="line">Not adapted for other directories or having multiple sequences in one file.</div>
+<div class="line">Not adapted for .fastq</div>
+</div>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
 <dd class="field-odd"><p><strong>sequencefile</strong> (<em>str</em>) – fasta file to read in.</p>
 </dd>
 <dt class="field-even">Returns</dt>
-<dd class="field-even"><p>read name
-sequence (str) : upper case, AA acid sequence</p>
-</dd>
-<dt class="field-odd">Return type</dt>
-<dd class="field-odd"><p>name (str)</p>
+<dd class="field-even"><p><ul class="simple">
+<li><p>name (str): read name</p></li>
+<li><p>sequence (str) : upper case, AA acid sequence</p></li>
+</ul>
+</p>
 </dd>
 </dl>
 </dd></dl>

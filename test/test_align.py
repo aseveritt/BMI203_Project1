@@ -101,17 +101,8 @@ def test_alignment_score():
 	b = sw.align(AmandaTmp("YYYWWWAAA"), AmandaTmp("YYYAAA"), print_flag=False)
 	assert b.num_gaps == 3, "Not finding gaps correctly --SW"
 
-	nw = algs.NeedlemanWunsch(gap_open=-3, gap_extension = -1, substitutionMatrix = "BLOSUM50")
-	sw = algs.SmithWaterman(gap_open=-3, gap_extension = -1, substitutionMatrix = "BLOSUM50")
-	#b = nw.align(AmandaTmp("CALM"), AmandaTmp("ACALMA"), print_flag=True)
-	#print(b.top_score)
-
-	#assert b.top_score == 22, "Not generating scores correctly -- NW"
+	nw = algs.NeedlemanWunsch(gap_open=-5, gap_extension = -0.5, substitutionMatrix = "BLOSUM62")
+	sw = algs.SmithWaterman(gap_open=-5, gap_extension = -0.5, substitutionMatrix = "BLOSUM62")
 	b = sw.align(AmandaTmp("CALM"), AmandaTmp("ACALMA"), print_flag=False)
-	assert b.top_score == 30, "Not generating scores correctly -- NW"
-
-	b = nw.align(AmandaTmp("ACACT"), AmandaTmp("AAT"), print_flag=False)
-	assert b.top_score == 7, "Not generating scores correctly -- NW"
-	b = sw.align(AmandaTmp("ACACT"), AmandaTmp("AAT"), print_flag=False)
-	assert b.top_score == 9, "Not generating scores correctly -- NW"
+	assert b.top_score == 22, "Not generating scores correctly -- SW"
 
