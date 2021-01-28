@@ -69,17 +69,17 @@ def test_scoring_matrix_io():
 
 def test_identical():
 	nw = algs.NeedlemanWunsch(gap_open=-3, gap_extension = -1, substitutionMatrix = "BLOSUM62")
-	b = nw.align(algs.FastaRecord("sequences/prot-0004.fa"), algs.FastaRecord("sequences/prot-0004.fa"), print_flag=False)
+	b = nw.align(algs.FastaRecord("test_sequences/prot-0004.fa"), algs.FastaRecord("test_sequences/prot-0004.fa"), print_flag=False)
 	assert b.num_gaps == 0, "Failing base case"
 
-	b = nw.align(algs.FastaRecord("sequences/prot-0008.fa"), algs.FastaRecord("sequences/prot-0008.fa"), print_flag=False)
+	b = nw.align(algs.FastaRecord("test_sequences/prot-0008.fa"), algs.FastaRecord("test_sequences/prot-0008.fa"), print_flag=False)
 	assert b.num_gaps == 0, "Failing base case"
 
 	sw = algs.SmithWaterman(gap_open=-3, gap_extension = -1, substitutionMatrix = "BLOSUM62")
-	b = nw.align(algs.FastaRecord("sequences/prot-0004.fa"), algs.FastaRecord("sequences/prot-0004.fa"), print_flag=False)
+	b = nw.align(algs.FastaRecord("test_sequences/prot-0004.fa"), algs.FastaRecord("test_sequences/prot-0004.fa"), print_flag=False)
 	assert b.num_gaps == 0, "Failing base case"
 
-	b = nw.align(algs.FastaRecord("sequences/prot-0008.fa"), algs.FastaRecord("sequences/prot-0008.fa"), print_flag=False)
+	b = nw.align(algs.FastaRecord("test_sequences/prot-0008.fa"), algs.FastaRecord("test_sequences/prot-0008.fa"), print_flag=False)
 	assert b.num_gaps == 0, "Failing base case"
 	
 
